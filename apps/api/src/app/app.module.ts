@@ -1,12 +1,12 @@
+import { ApolloPluginsModule, ApolloPluginsService } from '@app/utils';
+import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
 import { LoggerModule } from 'nestjs-pino';
+import { join } from 'path';
 
 import { HealthModule } from '../health/health.module';
-import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
-import { join } from 'path';
-import { ApolloPluginsModule, ApolloPluginsService } from '@app/utils';
 
 @Module({
     imports: [
@@ -42,9 +42,10 @@ import { ApolloPluginsModule, ApolloPluginsService } from '@app/utils';
                     },
                     sortSchema: true,
                     playground: false,
+                    /* eslint-disable-next-line */
                     context: ({ req, res }) => ({ req, res }),
                     plugins: apolloPluginsService.plugins,
-                }
+                };
             },
             imports: [ApolloPluginsModule],
             inject: [ApolloPluginsService],
@@ -55,4 +56,4 @@ import { ApolloPluginsModule, ApolloPluginsService } from '@app/utils';
     controllers: [],
     providers: [],
 })
-export class AppModule { }
+export class AppModule {}

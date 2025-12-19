@@ -34,6 +34,7 @@ export default [
     },
     {
         files: ['**/*.ts', '**/*.tsx'],
+        ignores: ['**/*.spec.ts', '**/*.spec.tsx', '**/jest.config.ts', '**/vite.config.ts', '**/webpack.config.ts'],
         languageOptions: {
             parser: tseslint.parser,
             parserOptions: {

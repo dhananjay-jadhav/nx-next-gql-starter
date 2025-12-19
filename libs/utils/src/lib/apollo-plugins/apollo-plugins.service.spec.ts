@@ -1,5 +1,6 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { HttpAdapterHost } from '@nestjs/core';
+import { Test, TestingModule } from '@nestjs/testing';
+
 import { ApolloPluginsService } from './apollo-plugins.service';
 
 describe('ApolloPluginsService', () => {
@@ -11,14 +12,11 @@ describe('ApolloPluginsService', () => {
             mockHttpAdapterHost = {
                 httpAdapter: {
                     getHttpServer: jest.fn().mockReturnValue(null),
-                } as any,
-            };
+                },
+            } as unknown as Partial<HttpAdapterHost>;
 
             const module: TestingModule = await Test.createTestingModule({
-                providers: [
-                    ApolloPluginsService,
-                    { provide: HttpAdapterHost, useValue: mockHttpAdapterHost },
-                ],
+                providers: [ApolloPluginsService, { provide: HttpAdapterHost, useValue: mockHttpAdapterHost }],
             }).compile();
 
             service = module.get<ApolloPluginsService>(ApolloPluginsService);
@@ -48,14 +46,11 @@ describe('ApolloPluginsService', () => {
                 mockHttpAdapterHost = {
                     httpAdapter: {
                         getHttpServer: jest.fn().mockReturnValue(mockHttpServer),
-                    } as any,
-                };
+                    },
+                } as unknown as Partial<HttpAdapterHost>;
 
                 const module: TestingModule = await Test.createTestingModule({
-                    providers: [
-                        ApolloPluginsService,
-                        { provide: HttpAdapterHost, useValue: mockHttpAdapterHost },
-                    ],
+                    providers: [ApolloPluginsService, { provide: HttpAdapterHost, useValue: mockHttpAdapterHost }],
                 }).compile();
 
                 service = module.get<ApolloPluginsService>(ApolloPluginsService);
@@ -87,14 +82,11 @@ describe('ApolloPluginsService', () => {
                 mockHttpAdapterHost = {
                     httpAdapter: {
                         getHttpServer: jest.fn().mockReturnValue(null),
-                    } as any,
-                };
+                    },
+                } as unknown as Partial<HttpAdapterHost>;
 
                 const module: TestingModule = await Test.createTestingModule({
-                    providers: [
-                        ApolloPluginsService,
-                        { provide: HttpAdapterHost, useValue: mockHttpAdapterHost },
-                    ],
+                    providers: [ApolloPluginsService, { provide: HttpAdapterHost, useValue: mockHttpAdapterHost }],
                 }).compile();
 
                 service = module.get<ApolloPluginsService>(ApolloPluginsService);
@@ -122,10 +114,7 @@ describe('ApolloPluginsService', () => {
                 };
 
                 const module: TestingModule = await Test.createTestingModule({
-                    providers: [
-                        ApolloPluginsService,
-                        { provide: HttpAdapterHost, useValue: mockHttpAdapterHost },
-                    ],
+                    providers: [ApolloPluginsService, { provide: HttpAdapterHost, useValue: mockHttpAdapterHost }],
                 }).compile();
 
                 service = module.get<ApolloPluginsService>(ApolloPluginsService);
