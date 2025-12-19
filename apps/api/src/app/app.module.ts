@@ -5,10 +5,8 @@ import { LoggerModule } from 'nestjs-pino';
 import { HealthModule } from '../health/health.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
-import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { join } from 'path';
-import { HttpAdapterHost } from '@nestjs/core';
-import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import { ApolloPluginsModule, ApolloPluginsService } from '@app/utils';
 
 @Module({
     imports: [
@@ -35,8 +33,7 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
             inject: [ConfigService],
         }),
         GraphQLModule.forRootAsync<ApolloFederationDriverConfig>({
-            useFactory: (httpAdapterHost: HttpAdapterHost) => {
-                const httpServer = httpAdapterHost.httpAdapter.getHttpServer();
+            useFactory: (apolloPluginsService: ApolloPluginsService) => {
                 return {
                     path: '/graphql',
                     autoSchemaFile: {
@@ -46,13 +43,11 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
                     sortSchema: true,
                     playground: false,
                     context: ({ req, res }) => ({ req, res }),
-                    plugins: [
-                        ApolloServerPluginLandingPageLocalDefault({ embed: true }),
-                        ApolloServerPluginDrainHttpServer({ httpServer }),
-                    ],
+                    plugins: apolloPluginsService.plugins,
                 }
             },
-            inject: [HttpAdapterHost],
+            imports: [ApolloPluginsModule],
+            inject: [ApolloPluginsService],
             driver: ApolloFederationDriver,
         }),
         HealthModule,
