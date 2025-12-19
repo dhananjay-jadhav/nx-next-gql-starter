@@ -81,6 +81,35 @@ It performs the following steps:
 1.  Installs dependencies.
 2.  Runs linting, testing, and building for all projects in parallel to ensure code quality and correctness.
 
+## 🚀 GraphQL and Apollo Plugins
+
+This starter is configured with NestJS's GraphQL module and a custom Apollo plugins implementation located in the `utils` library.
+
+### Apollo Plugins Module
+
+The `ApolloPluginsModule` (`libs/utils/src/lib/apollo-plugins`) provides a reusable service for configuring essential Apollo Server plugins:
+
+-   **`ApolloServerPluginLandingPageLocalDefault`**: Enables the Apollo Studio web client in development for easy query testing.
+-   **`ApolloServerPluginDrainHttpServer`**: Ensures graceful server shutdown by draining the HTTP server. This plugin is dynamically added during the `onModuleInit` lifecycle hook when the HTTP server becomes available.
+
+This module is integrated into the main `AppModule` to provide these plugins to the Apollo Server instance.
+
+### Testing
+
+The `ApolloPluginsService` includes comprehensive test coverage:
+
+-   **Unit Tests:** Verify service initialization and default plugin configuration.
+-   **Integration Tests:** Cover scenarios including:
+    -   Plugin registration when the HTTP server is available
+    -   Graceful handling when the HTTP server is unavailable
+    -   Edge cases when `httpAdapter` is undefined
+
+Run the tests with:
+
+```sh
+yarn nx test utils
+```
+
 ## 📁 Workspace Structure
 
 ```
