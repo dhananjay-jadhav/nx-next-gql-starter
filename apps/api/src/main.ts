@@ -19,6 +19,8 @@ async function bootstrap(): Promise<void> {
 
     app.useLogger(logger);
 
+    app.enableShutdownHooks();
+
     const port = parseInt(config.getOrThrow('API_PORT', '3000'));
     await app.listen(port);
     logger.log(`🚀 Application is running on: http://localhost:${port}`);
