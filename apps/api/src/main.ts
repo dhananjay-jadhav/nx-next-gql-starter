@@ -23,7 +23,7 @@ async function bootstrap(): Promise<void> {
 
     const port = parseInt(config.getOrThrow('API_PORT', '3000'));
     await app.listen(port);
-    logger.log(`🚀 Application is running on: http://localhost:${port}`);
+    logger.log(`🚀 Application is running on: http://localhost:${port}/graphql`);
 }
 
 bootstrap()
