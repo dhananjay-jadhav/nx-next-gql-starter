@@ -1,12 +1,10 @@
-import { ApolloPluginsModule, ApolloPluginsService } from '@app/utils';
+import { ApolloPluginsModule, ApolloPluginsService, HealthModule } from '@app/utils';
 import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { LoggerModule } from 'nestjs-pino';
 import { join } from 'path';
-
-import { HealthModule } from '../health/health.module';
 
 @Module({
     imports: [
