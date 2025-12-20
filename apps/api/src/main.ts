@@ -3,7 +3,7 @@
  * This is only a minimal backend to get started.
  */
 
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { Logger as PinoLogger } from 'nestjs-pino';
@@ -18,6 +18,8 @@ async function bootstrap(): Promise<void> {
     const config = app.get(ConfigService);
 
     app.useLogger(logger);
+
+    app.useGlobalPipes(new ValidationPipe());
 
     app.enableShutdownHooks();
 

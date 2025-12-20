@@ -25,17 +25,22 @@ jobs:
                   node-version: 24
                   cache: 'yarn'
 
-            # Install dependencies
-            - run: yarn install --immutable
+            - name: Install dependencies
+              run: yarn install --immutable
+
+            - name: Set up environment
+              run: |
+                  cp .env.sample .env
 
             # Run lint
             - run: yarn lint
 
             # Run test
-            - run: yarn all:test
+            - name: Run tests
+              run: yarn all:test
 
-            # Run build
-            - run: yarn all:build
+            - name: Run build
+              run: yarn all:build
 
-            # Run e2e tests
-            - run: yarn e2e:api
+            - name: Run e2e tests
+              run: yarn e2e:api
