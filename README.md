@@ -94,7 +94,31 @@ The `ApolloPluginsModule` (`libs/utils/src/lib/apollo-plugins`) provides a reusa
 
 This module is integrated into the main `AppModule` to provide these plugins to the Apollo Server instance.
 
+## 🏥 Health Module
+
+The `HealthModule` (`libs/utils/src/lib/health`) provides Kubernetes-compatible health check endpoints for liveness and readiness probes.
+
+### Endpoints
+
+-   **`GET /health/liveness`**: Returns the liveness status. Used by Kubernetes to determine if the application is running.
+-   **`GET /health/readiness`**: Returns the readiness status. Checks if the application is ready to receive traffic, including graceful shutdown detection.
+
+### Components
+
+-   **`HealthController`**: Exposes the health check endpoints using NestJS Terminus.
+-   **`ShutdownHealthIndicator`**: Custom health indicator that reports the application's shutdown state.
+-   **`ShutdownService`**: Implements `OnApplicationShutdown` to track when the application is shutting down, enabling graceful shutdown handling.
+
 ### Testing
+
+The Health module includes comprehensive test coverage:
+
+-   **`HealthController`**: Tests for liveness/readiness endpoints, health check service integration, and error handling.
+-   **`ShutdownHealthIndicator`**: Tests for health status reporting (up/down states) and health indicator service integration.
+-   **`ShutdownService`**: Tests for shutdown signal handling, static state behavior across instances, and `OnApplicationShutdown` interface implementation.
+-   **`HealthModule`**: Tests for module configuration, dependency injection, and TerminusModule integration.
+
+### Apollo Plugins Testing
 
 The `ApolloPluginsService` includes comprehensive test coverage:
 
